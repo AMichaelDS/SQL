@@ -24,7 +24,16 @@ This portfolio showcases my skills in using SQL queries to perform complex data 
 This project focuses on analyzing European soccer data to gain insight into team performance, player statistics, and predict match outcomes.
 
 ## 2. Data Description
-The dataset 
+| Table Name         | Description                                      |
+|--------------------|--------------------------------------------------|
+| Matches            | Contains details about each match                |
+| Teams              | Provides information about the teams             |
+| Players            | Includes data on individual players              |
+| Player_Attributes  | Contains additional attributes for each player   |
+| Leagues            | Describes the different leagues                   |
+| Team_Attributes    | Provides team-specific attributes                |
+| Country            | Includes information about the countries         |
+
 Describe the European soccer dataset you will be using.
 Discuss the available tables and their attributes.
 Explain any data preprocessing steps required.
