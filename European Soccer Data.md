@@ -5,10 +5,10 @@
 1. [Introduction](#1-introduction)
 2. [Data Description and Preparation](#2-data-description-and-preparation)
 3. [Exploratory Data Analysis](#3-exploratory-data-analysis)
-4. [Data Analysis and Complex Data Manipulation](#data-analysis-and-complex-data-manipulation)
-5. [Reporting and Visualization](#reporting-and-visualization)
-6. [Conclusion](#conclusion)
-7. [Appendix](#appendix)
+4. [Data Analysis and Complex Data Manipulation](#4-data-analysis-and-complex-data-manipulation)
+5. [Reporting and Visualization](#5-reporting-and-visualization)
+6. [Conclusion](#6-conclusion)
+7. [Appendix](#7-appendix)
 
 ---
 
