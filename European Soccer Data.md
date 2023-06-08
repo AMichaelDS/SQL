@@ -18,6 +18,7 @@ This portfolio showcases my skills in using SQL queries to perform complex data 
 This project focuses on analyzing European soccer data to gain insight into team performance, player statistics, and predict match outcomes. The query is performed using the Microsoft SQL Server Management Studio
 
 ## 2. Data Description and Preparation
+### Dataset
 The dataset that I am using is the european soccer data set obtained from [Kaggle](https://www.kaggle.com/datasets/hugomathien/soccer). It contains 7 tables with the following description:
 
 | Table Name         | Description                                                                | Number Of Attributes |
@@ -32,9 +33,80 @@ The dataset that I am using is the european soccer data set obtained from [Kaggl
 
 After getting the dataset in a CSV form, I imported the file into the SSMS, determining the appropriate data type and removing the irrelevant column. Some are done manually and some were done using dynamic SQL script. I have also selected the primary and foreign keys for each table while establishing the relationships between them.
 
+### Schema
 For this project I created a schema so that it can be easily distinguished with the other dataset. The schema name I picked is soc.
 
-Data preprocessing steps such as handling missing values, removing duplicates, and performing data validation and quality checks were applied.
+### Data Pre-Processing
+
+Before doing any analysis on the dataset, it is important to preprocess the data to ensure that the data is clean, consistent, and ready for analysis. 
+
+**Removing Duplicates**
+
+Since there is 2 ID for the player and team which is the api_id and fifa_id, I checked whether there is only 1 api_id for each fifa_id and vice versa.
+- Team (team & team_attributes)
+```sql
+;
+```
+Resulting in:
+
+	Then I try to find the column that causes the duplicate
+```sql
+;
+```
+In which I remove the duplicate team by choosing the only the first occurence. 
+```sql
+;
+```
+
+- Player (player & player_attributes)
+```sql
+;
+```
+In here I did not remove any duplicate since there is only duplicate on the player_attributes table.  So later by inner-joining the table it will be eliminated by itself.
+
+**Eliminating Null Values**
+
+In the team_attributes table, the buildUpPlayDribbling column contains null value. This will become an issue later on so I eliminate the null values by changing it to the average for that column.
+```sql
+;
+```
+
+**Data Integration and Transformation**
+
+After completing all the previous section, I joined the relevant table to create a unified dataset so that analysis can be easily performed later. I also transformed the date to YYYYMMDD format.
+- Country & League
+```sql
+;
+```
+
+- Team(team & team_attributes)
+```sql
+;
+```
+
+- Player(player & player_attributes)
+```sql
+;
+```
+
+- Match(Match & All Tables)
+Here I substituted the ID for each country, league, player, and team with the name so that it will be easier to look at.
+```sql
+;
+```
+
+**Data Cleaning**
+
+In the PlayerFin table,  the column attacking_work_rate and defensive_work_rate has some values that is irrelevant in which I converted it to null by using case when statement.
+
+```sql
+;
+```
+
+**Feature Engineering**
+
+For the TeamFin table, I noticed that there is no overall_rating in it which I think is important so we can perform analysis on it. 
+
 
 ## 3. Exploratory Data Analysis
 - Explore the dataset using SQL queries to gain insights and understand the data better.
