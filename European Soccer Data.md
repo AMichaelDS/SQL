@@ -114,9 +114,74 @@ Here I summed the value for all the metrics and dividing it by 9. In the beginni
 
 
 ## 3. Exploratory Data Analysis
-- Explore the dataset using SQL queries to gain insights and understand the data better.
-- Calculate descriptive statistics, aggregate and summarize data.
-- Visualize the results using appropriate charts and graphs.
+After finishing the data preparation now we can start doing analysis on the dataset. 
+
+**Analysis on Country and League**
+Here I created the sum and average for each country and league to analyse which country/league is more dominant. 
+```sql
+;
+```
+In here we can see that Spain Liga BBVA has the highest number of total goal
+
+**Analysis on TeamFin**
+In order to do analysis on this table, I picked only the latest assessment date for each team by using this query:
+```sql
+;
+```
+
+Then I removed the duplicate team/observation by selecting only the first occurence for each team name.
+```sql
+;
+```
+
+- Highest Overall Team Rating
+I selected 10 teams with the highest rating
+```sql
+;
+```
+
+- Numerical Analysis 
+I used dynamic SQL script to create table containing team with the highest performance metrics for each numerical attributes.
+```sql
+;
+```
+
+- Categorical Analysis
+Here I performed a categorical analysis to find the distribution of team across the categorical attribute. This is done to get a relative representation of teams in different categories within each attribute.
+
+```sql
+;
+```
+
+**Analysis on PlayerFin**
+Like what I did for TeamFin, I picked only the latest assessment date for each player.
+```sql
+;
+```
+
+- Highest Overall Team Rating
+I selected 10 players with the highest rating
+```sql
+;
+```
+
+- Highest For Each Rating
+I use dynamic SQL script to create table containing player with the highest rating for each attribute. 
+```sql
+;
+```
+
+	Then I use another script to remove irrelevant table and table that has categorical attribute
+```sql
+;
+```
+
+- Categorical Analysis
+Here I performed a categorical analysis to find the distribution of player across the categorical attribute. This is done to get a relative representation of players in different categories within each attribute.
+
+```sql
+;
+```
 
 ## 4. Data Analysis and Complex Data Manipulation
 - Present the results of your SQL queries.
