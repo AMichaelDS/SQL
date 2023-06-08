@@ -184,6 +184,51 @@ Here I performed a categorical analysis to find the distribution of player acros
 ```
 
 ## 4. Data Analysis and Complex Data Manipulation
+**Average Player Ratings**
+For MatchFin, I created an average rating of player for each team(home & away).  
+First it counted the number of players on the team that has null value and sum it up. For team where all players rating is null the average become null. This is done to avoid dividing by 0 later.
+Then I sum the ratings of the player then divide it by the number of players that does not have null value.
+
+```sql
+;
+```
+
+**Total Player Ratings**
+I used the average player ratings that i have created before to replace the null values for each corresponding team before adding them all up to create total player ratings.
+```sql
+;
+```
+
+**Winning Metric**
+Then I proceed to create 4 winning metrics. 
+- First based on actual match result
+
+```sql
+;
+```
+- Secondly based on the team that has higher ratings
+
+```sql
+;
+```
+- Thirdly based on the team that has higher average player ratings
+
+```sql
+;
+```
+- Lastly based on the team that has higher total player ratings
+
+```sql
+;
+```
+
+**Comparison for Each Metrics**
+Here I compare the accuracy for each metrics with the actual match results. 
+
+```sql
+;
+```
+
 - Present the results of your SQL queries.
 - Provide visualizations or summaries to enhance understanding.
 - Interpret and discuss the insights and patterns you discovered.
