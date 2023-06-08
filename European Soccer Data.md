@@ -104,8 +104,13 @@ In the PlayerFin table,  the column attacking_work_rate and defensive_work_rate 
 ```
 
 **Feature Engineering**
+For the TeamFin table, I noticed that there is no overall_rating in it which I think is important so we can perform analysis on it because having an overall rating allows us to evaluate and compare the performance of different soccer teams in a more comprehensive way.
 
-For the TeamFin table, I noticed that there is no overall_rating in it which I think is important so we can perform analysis on it. 
+Here I summed the value for all the metrics and dividing it by 9. In the beginning I choose to deal with the null value by simply changing the denominator. But then I decided to eliminate the null value earlier in the data preprocessing phase.
+
+```sql
+;
+```
 
 
 ## 3. Exploratory Data Analysis
