@@ -175,7 +175,7 @@ I use dynamic SQL script to create tables containing player with the highest rat
 ;
 ```
 
-	Then I use another script to remove irrelevant table and table that has categorical attribute
+Then I use another script to remove irrelevant table and table that has categorical attribute
 ```SQL
 ;
 ```
