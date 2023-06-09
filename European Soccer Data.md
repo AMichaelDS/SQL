@@ -223,19 +223,31 @@ Then I proceed to create 4 winning metrics.
 ```
 
 **Comparison for Each Metrics**
-Here I compare the accuracy for each metrics with the actual match results. 
-
+Here I compare the accuracy for each metrics with the actual match results. The first query shows the overall result
 ```sql
 ;
 ```
 
-- Present the results of your SQL queries.
-- Provide visualizations or summaries to enhance understanding.
-- Interpret and discuss the insights and patterns you discovered.
-- Demonstrate advanced SQL techniques for complex data manipulation.
-- Work with subqueries, joins, and table relationships to extract meaningful information from the data.
-- Showcase more complex SQL queries developed.
-- Explore additional analysis or insights beyond the basic queries.
+The second query only show matches that is not tied, this is done because the probability of team having the same team, average player, and total ratings would be really small.
+```sql
+;
+```
+
+The third one only show matches that is tied, used only as a validation for the previous result.
+
+
+**Home & Away Analysis**
+Lastly, I analysed the performance of team performance based on the home and away matches to determine the winning percentage. 
+
+First I combined the winner for both home and away matches grouped by the team, in which I am able to find the number of win per team based on their home and away matches. 
+
+I also combined the home and away matches grouped by team to get the total of matches.
+
+Then I combined those 2 queries based on the team so that I can calculate the winning percentage.
+
+```sql
+;
+```
 
 ## 5. Reporting and Visualization
 - Generate comprehensive reports and create interactive dashboards using SQL queries and visualization tools.
