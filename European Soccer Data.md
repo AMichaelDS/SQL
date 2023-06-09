@@ -40,16 +40,16 @@ For this project, I created a schema so that it can be easily distinguished from
 
 Before analysing the dataset, it is important to pre-process the data to ensure that it is clean, consistent, and ready for analysis. 
 
-**Removing Duplicates**
+#### Removing Duplicates
 
 Since there is 2 ID for the player and team, which is the api_id and fifa_id, I checked whether there is only one api_id for each fifa_id and vice versa.
 - Team (team & team_attributes)
 ```SQL
 ;
 ```
-Resulting in:
 
-	Then I try to find the column that causes the duplicate
+Then I try to find the column that causes the duplicate
+
 ```SQL
 ;
 ```
@@ -64,14 +64,14 @@ I remove the duplicate team by choosing only the first occurrence.
 ```
 I did not remove any duplicates here since the duplicate only exists on the player_attributes table. So later, by inner-joining the table, it will be eliminated by itself.
 
-**Eliminating Null Values**
+#### Eliminating Null Values
 
 In the team_attributes table, the buildUpPlayDribbling column contains null value. This will become an issue later, so I eliminate the null values by changing them to the average for that column.
 ```SQL
 ;
 ```
 
-**Data Integration and Transformation**
+#### Data Integration and Transformation
 
 After completing all the previous sections, I joined the relevant table to create a unified dataset so that analysis could be easily performed later. I also transformed the date to YYYYMMDD format.
 - Country & League
@@ -95,7 +95,7 @@ Here I substituted the ID for each country, league, player, and team with the na
 ;
 ```
 
-**Data Cleaning**
+#### Data Cleaning
 
 In the PlayerFin table,  the column attacking_work_rate and defensive_work_rate has some irrelevant values, which I converted to null using a case-when statement.
 
@@ -103,7 +103,8 @@ In the PlayerFin table,  the column attacking_work_rate and defensive_work_rate 
 ;
 ```
 
-**Feature Engineering**
+#### Feature Engineering
+
 For the TeamFin table, I noticed that there is no overall rating, which is essential because having an overall rating allows us to evaluate and compare the performance of different soccer teams more comprehensively.
 
 I summed the value for all the metrics and divided it by 9. Initially, I dealt with the null value by simply changing the denominator. But then, I decided to eliminate the null value earlier in the data pre-processing phase.
@@ -116,14 +117,16 @@ I summed the value for all the metrics and divided it by 9. Initially, I dealt w
 ## 3. Exploratory Data Analysis
 After finishing the data preparation, we can now start analysing the dataset. 
 
-**Analysis on Country and League**
+### Analysis on Country and League
+
 I created the sum and average for each country and league to analyse which country/league is more dominant. 
 ```SQL
 ;
 ```
 Here we can see that Spain Liga BBVA has the highest total goal.
 
-**Analysis on TeamFin**
+### Analysis on TeamFin
+
 To analyse this table, I picked only the latest assessment date for each team by using this query:
 ```SQL
 ;
@@ -153,7 +156,8 @@ Here I performed a categorical analysis to find the distribution of teams across
 ;
 ```
 
-**Analysis on PlayerFin**
+### Analysis on PlayerFin
+
 Like what I did for TeamFin, I picked only the latest assessment date for each player.
 ```SQL
 ;
@@ -184,7 +188,9 @@ Here I performed a categorical analysis to find the distribution of players acro
 ```
 
 ## 4. Data Analysis and Complex Data Manipulation
-**Average Player Ratings**
+
+### Average Player Ratings
+
 For MatchFin, I created an average rating of players for each team(home & away).  
 First, it counted the number of players on the team with null value and summed it up. For teams where all the player rating is null, the average becomes 0. It is done to avoid dividing by 0 later on.
 Then I sum the ratings of the player then divide it by the number of players that did not have a null value.
@@ -193,13 +199,15 @@ Then I sum the ratings of the player then divide it by the number of players tha
 ;
 ```
 
-**Total Player Ratings**
+### Total Player Ratings
+
 I used the average player ratings I created to replace the null values for each corresponding team before adding them all up to create total player ratings.
 ```SQL
 ;
 ```
 
-**Winning Metric**
+### Winning Metric
+
 Then I proceed to create four winning metrics. 
 - First, based on the actual match result
 
@@ -222,7 +230,8 @@ Then I proceed to create four winning metrics.
 ;
 ```
 
-**Comparison for Each Metric**
+### Comparison for Each Metric
+
 Here I compare the accuracy for each metric with the actual match results. The first query shows the overall result
 ```SQL
 ;
@@ -238,7 +247,8 @@ The third one only shows tied matches, used only to validate the previous result
 ;
 ```
 
-**Home & Away Analysis**
+### Home & Away Analysis
+
 Lastly, I analysed the team performance based on the home and away match to determine the winning percentage. 
 
 First, I combined the winner for both home and away matches grouped by the team, in which I could find the number of wins per team based on their home and away matches. 
