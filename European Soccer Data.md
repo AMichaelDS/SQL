@@ -234,7 +234,9 @@ The second query only show matches that is not tied, this is done because the pr
 ```
 
 The third one only show matches that is tied, used only as a validation for the previous result.
-
+```sql
+;
+```
 
 **Home & Away Analysis**
 Lastly, I analysed the performance of team performance based on the home and away matches to determine the winning percentage. 
