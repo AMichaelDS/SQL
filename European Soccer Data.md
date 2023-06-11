@@ -518,6 +518,7 @@ FROM (
 EXEC sp_executesql @sql;
 ```
 
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/20461c3e-d655-478a-a3b8-c63dd5f9e79e)
 
 #### Categorical Analysis
 Here I performed a categorical analysis to find the distribution of teams across the categorical attribute. It is done to get a relative representation of teams in different categories within each attribute.
@@ -530,7 +531,9 @@ SELECT
     ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS buildUpPlaySpeedPercentage
 FROM soc.analysis_team
 GROUP BY buildUpPlaySpeedClass;
+```
 
+```SQL
 -- buildUpPlayDribblingClass
 SELECT 
     buildUpPlayDribblingClass, 
@@ -538,7 +541,9 @@ SELECT
     ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS buildUpPlayDribblingPercentage
 FROM soc.analysis_team
 GROUP BY buildUpPlayDribblingClass;
+```
 
+```SQL
 -- buildUpPlayPassingClass
 SELECT 
     buildUpPlayPassingClass, 
@@ -546,7 +551,9 @@ SELECT
     ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS buildUpPlayPassingPercentage
 FROM soc.analysis_team
 GROUP BY buildUpPlayPassingClass;
+```
 
+```SQL
 -- buildUpPlayPositioningClass
 SELECT 
     buildUpPlayPositioningClass, 
@@ -554,7 +561,9 @@ SELECT
     ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS buildUpPlayPositioningPercentage
 FROM soc.analysis_team
 GROUP BY buildUpPlayPositioningClass;
+```
 
+```SQL
 -- chanceCreationPassingClass
 SELECT 
     chanceCreationPassingClass, 
@@ -562,7 +571,9 @@ SELECT
     ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS chanceCreationPassingPercentage
 FROM soc.analysis_team
 GROUP BY chanceCreationPassingClass;
+```
 
+```SQL
 -- chanceCreationCrossingClass
 SELECT 
     chanceCreationCrossingClass, 
@@ -570,7 +581,9 @@ SELECT
     ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS chanceCreationCrossingPercentage
 FROM soc.analysis_team
 GROUP BY chanceCreationCrossingClass;
+```
 
+```SQL
 -- chanceCreationShootingClass
 SELECT 
     chanceCreationShootingClass, 
@@ -578,7 +591,9 @@ SELECT
     ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS chanceCreationShootingPercentage
 FROM soc.analysis_team
 GROUP BY chanceCreationShootingClass;
+```
 
+```SQL
 -- chanceCreationPositioningClass
 SELECT 
     chanceCreationPositioningClass, 
@@ -586,7 +601,9 @@ SELECT
     ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS chanceCreationPositioningPercentage
 FROM soc.analysis_team
 GROUP BY chanceCreationPositioningClass;
+```
 
+```SQL
 -- defencePressureClass
 SELECT 
     defencePressureClass, 
@@ -594,7 +611,9 @@ SELECT
     ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS defencePressurePercentage
 FROM soc.analysis_team
 GROUP BY defencePressureClass;
+```
 
+```SQL
 -- defenceAggressionClass
 SELECT 
     defenceAggressionClass, 
@@ -602,7 +621,9 @@ SELECT
     ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS defenceAggressionPercentage
 FROM soc.analysis_team
 GROUP BY defenceAggressionClass;
+```
 
+```SQL
 -- defenceTeamWidthClass
 SELECT 
     defenceTeamWidthClass, 
@@ -610,7 +631,9 @@ SELECT
     ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS defenceTeamWidthPercentage
 FROM soc.analysis_team
 GROUP BY defenceTeamWidthClass;
+```
 
+```SQL
 -- defenceDefenderLineClass
 SELECT 
     defenceDefenderLineClass, 
@@ -619,7 +642,6 @@ SELECT
 FROM soc.analysis_team
 GROUP BY defenceDefenderLineClass;
 ```
-
 
 ### Analysis on PlayerFin
 Like what I did for TeamFin, I picked only the latest assessment date for each player.
@@ -693,6 +715,7 @@ EXEC sp_executesql @sql;
 #### Categorical Analysis
 Here I performed a categorical analysis to find the distribution of players across the categorical attribute. It is done to get a relative representation of players in different categories within each attribute.
 
+
 ```SQL
 -- Count and percentage of players by preferred foot
 SELECT 
@@ -701,7 +724,9 @@ SELECT
     ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.Analysis_Player), 2) AS playerPercentage
 FROM soc.Analysis_Player
 GROUP BY preferred_foot;
+```
 
+```SQL
 -- Count and percentage of players by attacking work rate
 SELECT 
     attacking_work_rate,
@@ -709,7 +734,9 @@ SELECT
     ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.Analysis_Player), 2) AS playerPercentage
 FROM soc.Analysis_Player
 GROUP BY attacking_work_rate;
+```
 
+```SQL
 -- Count and percentage of players by defensive work rate
 SELECT 
     defensive_work_rate,
