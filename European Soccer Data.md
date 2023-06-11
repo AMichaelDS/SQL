@@ -1,5 +1,6 @@
 # European Soccer Data Preparation and Analysis
 
+
 ## Table of Contents
 
 1. [Introduction](#1-introduction)
@@ -12,12 +13,15 @@
 
 ---
 
+
 ## 1. Introduction
 
 This portfolio showcases my skills in using SQL queries to perform complex data manipulation and analysis. This project aims to demonstrate my ability to work with SQL databases, clean and prepare data, perform exploratory data analysis, and generate meaningful insights. 
 This project analyses European soccer data to gain insight into team performance, player statistics and predict match outcomes. The query is performed using the Microsoft SQL Server Management Studio.
 
+
 ## 2. Data Description and Preparation
+
 ### Dataset
 The dataset that I am using is the European soccer data set obtained from [Kaggle](https://www.kaggle.com/datasets/hugomathien/soccer). It contains seven tables with the following description:
 
@@ -53,17 +57,21 @@ CLOSE column_cursor;
 DEALLOCATE column_cursor;
 ```
 
+
 ### Schema
 For this project, I created a schema so that it can be easily distinguished from the other dataset. The schema name I picked is soc.
 
-### Data Pre-Processing
 
+### Data Pre-Processing
 Before analysing the dataset, it is important to pre-process the data to ensure that it is clean, consistent, and ready for analysis. 
 
-#### Removing Duplicates
 
+#### Removing Duplicates
 Since there is 2 ID for the player and team, which is the api_id and fifa_id, I checked whether there is only one api_id for each fifa_id and vice versa.
+
+
 ###### Team (team & team_attributes)
+
 ```SQL
 SELECT DISTINCT t1.team_api_id, t1.team_fifa_api_id
 FROM soc.Team /*Team_Attributes*/t1
@@ -95,6 +103,7 @@ ORDER BY team_fifa_api_id;
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/3334ad57-d2fe-4e33-ab87-cd3eef869147)
 
 I remove the duplicate team by choosing only the first occurrence. 
+
 ```SQL
 DROP TABLE IF EXISTS soc.Team2;
 SELECT T.*
@@ -107,7 +116,9 @@ INNER JOIN (
 ) AS First ON T.team_long_name = First.team_long_name AND T.team_api_id = First.first_team_api_id;
 ```
 
+
 ###### Player (player & player_attributes)
+
 ```SQL
 /*More than 1 fifa id per 1 api id*/
 SELECT DISTINCT t1.player_api_id, t1.player_fifa_api_id
@@ -136,8 +147,8 @@ ORDER BY player_fifa_api_id, player_api_id;
 
 Since the duplicate only exists on the player_attributes table, I did not remove any duplicates her because later by inner-joining the attribute table with the player table, it will be eliminated by itself.
 
-#### Eliminating Null Values
 
+#### Eliminating Null Values
 In the team_attributes table, the buildUpPlayDribbling column contains null value. This will become an issue later, so I eliminate the null values by changing them to the average for that column.
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/81e5a92e-773c-48e7-b2bf-0b8b4ae0653f)
@@ -154,10 +165,13 @@ WHERE buildUpPlayDribbling IS NULL;
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/94533fc8-5a7e-4cf8-83f2-14c6904024b4)
 
-#### Data Integration and Transformation
 
+#### Data Integration and Transformation
 After completing all the previous sections, I joined the relevant table to create a unified dataset so that analysis could be easily performed later. I also transformed the date to YYYYMMDD format.
-- Country & League
+
+
+##### Country & League
+
 ```SQL
 DROP TABLE IF EXISTS soc.Country_League
 
@@ -170,7 +184,9 @@ ON C.country_id = L.country_id;
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/1253600e-f6a4-4bb3-8956-219a1a145b40)
 
-- Team(team & team_attributes)
+
+##### Team(team & team_attributes)
+
 ```SQL
 /* Joining*/
 DROP TABLE IF EXISTS soc.TeamFin
@@ -190,7 +206,9 @@ EXEC sp_rename 'soc.TeamFin.team_api_id_team', 'team_api_id', 'COLUMN';
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/39d9ad51-3787-48eb-b47f-cfeaf20227e6)
 
-- Player(player & player_attributes)
+
+##### Player(player & player_attributes)
+
 ```SQL
 /* Joining */
 DROP TABLE IF EXISTS soc.PlayerFin
@@ -207,8 +225,10 @@ DROP COLUMN IF EXISTS date;
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/d99e5739-e81d-4cf9-9d67-d9dd50eb3f16)
 
-- Match(Match & All Tables)
+
+##### Match(Match & All Tables)
 Here I substituted the ID for each country, league, player, and team with the name to make it easier to look at. 
+
 ```SQL
 /* Please take note that this query is executed much later on after cleaning the other table,
 and creating analysis table for team and player. 
@@ -320,8 +340,8 @@ ORDER BY home_team, away_team;
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/1f5c3055-a432-41f3-83e3-7c4d92c95971)
 
-#### Data Cleaning
 
+#### Data Cleaning
 In the PlayerFin table,  the column attacking_work_rate and defensive_work_rate has some irrelevant values, which I converted to null using a case-when statement.
 
 ```SQL
@@ -347,10 +367,9 @@ SET defensive_work_rate =
     END;
 ```
 
+
 #### Feature Engineering
-
 For the TeamFin table, I noticed that there is no overall rating, which is essential because having an overall rating allows us to evaluate and compare the performance of different soccer teams more comprehensively.
-
 I summed the value for all the metrics and divided it by 9. Initially, I dealt with the null value by simply changing the denominator. But then, I decided to eliminate the null value earlier in the data pre-processing phase.
 
 ```SQL
@@ -390,11 +409,13 @@ SET Overall_Rating =
 
 
 ## 3. Exploratory Data Analysis
+
 After finishing the data preparation, we can now start analysing the dataset. 
 
-### Analysis on Country and League
 
+### Analysis on Country and League
 I created the sum and average for each country and league to analyse which country/league is more dominant. 
+
 ```SQL
 DROP TABLE IF EXISTS soc.Analysis_Country_League
 SELECT country_name, league_name, num_team, total_home_goal, total_away_goal, total_goal, avg_home_goal_per_team, avg_away_goal_per_team, avg_home_goal_per_team + avg_away_goal_per_team AS total_avg_goal_per_team
@@ -414,9 +435,10 @@ ORDER BY num_team;
 
 Here we can see that Spain Liga BBVA has the highest total goal.
 
-### Analysis on TeamFin
 
+### Analysis on TeamFin
 To analyse this table, I picked only the latest assessment date for each team by using this query:
+
 ```SQL
 DROP TABLE IF EXISTS soc.Temp;
 SELECT TF1.*
@@ -429,7 +451,10 @@ INNER JOIN (
 ) AS TF2 ON TF1.team_long_name = TF2.team_long_name AND TF1.assessment_date = TF2.max_date;
 ```
 
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/5e94b1a6-f06a-4d55-8496-fc24d91d2cbe)
+
 Then I removed the duplicate team/observation by selecting only the first occurrence for each team name.
+
 ```SQL
 DROP TABLE IF EXISTS soc.Analysis_Team
 SELECT *
@@ -446,8 +471,12 @@ ALTER TABLE soc.Analysis_Team
 DROP COLUMN IF EXISTS row_num;
 ```
 
-- Highest Overall Team Rating
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/7ce72515-a5b7-40b1-aa24-dc67cb40e614)
+
+
+#### Highest Overall Team Rating
 I selected ten teams with the highest rating
+
 ```SQL
 SELECT TOP 10 team_long_name, Overall_Rating
 FROM soc.Analysis_Team
@@ -456,8 +485,10 @@ ORDER BY overall_rating DESC;
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/edab345c-650d-4e8d-b4cd-1d0d9f35044b)
 
-- Numerical Analysis 
+
+#### Numerical Analysis 
 I used a dynamic SQL script to create tables containing team with the highest performance metrics for each numerical attribute.
+
 ```SQL
 DECLARE @sql NVARCHAR(MAX);
 SET @sql = N'';
@@ -487,7 +518,8 @@ FROM (
 EXEC sp_executesql @sql;
 ```
 
-- Categorical Analysis
+
+#### Categorical Analysis
 Here I performed a categorical analysis to find the distribution of teams across the categorical attribute. It is done to get a relative representation of teams in different categories within each attribute.
 
 ```SQL
@@ -588,9 +620,10 @@ FROM soc.analysis_team
 GROUP BY defenceDefenderLineClass;
 ```
 
-### Analysis on PlayerFin
 
+### Analysis on PlayerFin
 Like what I did for TeamFin, I picked only the latest assessment date for each player.
+
 ```SQL
 DROP TABLE IF EXISTS soc.Analysis_Player
 SELECT PF1.*
@@ -605,8 +638,10 @@ WHERE overall_rating IS NOT NULL /*to remove the duplicate record*/
 ORDER BY player_name;
 ```
 
-- Highest Overall Team Rating
+
+#### Highest Overall Team Rating
 I selected ten players with the highest rating
+
 ```SQL
 SELECT TOP 10 *
 FROM soc.Analysis_Player
@@ -615,8 +650,10 @@ ORDER BY overall_rating DESC;
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/362621b6-cd54-4934-8b27-732925a8552f)
 
-- Highest For Each Rating
+
+#### Highest For Each Rating
 I use dynamic SQL script to create tables containing player with the highest rating for each attribute. 
+
 ```SQL
 DECLARE @sql NVARCHAR(MAX);
 SET @sql = N'';
@@ -629,6 +666,7 @@ EXEC sp_executesql @sql;
 ```
 
 Then I use another script to remove irrelevant table and table that has categorical attribute
+
 ```SQL
 - Then drop the irrelevant tabel
 DECLARE @sql NVARCHAR(MAX);
@@ -651,7 +689,8 @@ WHERE TABLE_SCHEMA = 'soc'
 EXEC sp_executesql @sql;
 ```
 
-- Categorical Analysis
+
+#### Categorical Analysis
 Here I performed a categorical analysis to find the distribution of players across the categorical attribute. It is done to get a relative representation of players in different categories within each attribute.
 
 ```SQL
@@ -680,10 +719,10 @@ FROM soc.Analysis_Player
 GROUP BY defensive_work_rate;
 ```
 
+
 ## 4. Data Analysis and Complex Data Manipulation
 
 ### Average Player Ratings
-
 For MatchFin, I created an average rating of players for each team(home & away).  
 First, it counted the number of players on the team with null value and summed it up. For teams where all the player rating is null, the average becomes 0. It is done to avoid dividing by 0 later on.
 Then I sum the ratings of the player then divide it by the number of players that did not have a null value.
@@ -787,9 +826,10 @@ END,
 END;
 ```
 
-### Total Player Ratings
 
+### Total Player Ratings
 I used the average player ratings I created to replace the null values for each corresponding team before adding them all up to create total player ratings.
+
 ```SQL
 ALTER TABLE soc.MatchFin
 ADD home_player_total_ratings INT,
@@ -822,10 +862,12 @@ SET home_player_total_ratings =
   COALESCE(away_player_11_rating, away_avg_player_rating);
 ```
 
-### Winning Metric
 
+### Winning Metric
 Then I proceed to create four winning metrics. 
-- First, based on the actual match result
+
+
+#### First, based on the actual match result
 
 ```SQL
 ALTER TABLE soc.MatchFin
@@ -837,7 +879,9 @@ SET Winner_Match = CASE WHEN home_team_goal > away_team_goal THEN 'Home'
 				   ELSE 'Tied'
 				   END;
 ```
-- Secondly, based on the team that has higher ratings
+
+
+#### Secondly, based on the team that has higher ratings
 
 ```SQL
 ALTER TABLE soc.MatchFin
@@ -849,7 +893,9 @@ SET Winner_Team = CASE WHEN home_team_rating > away_team_rating THEN 'Home'
 				  ELSE 'Tied'
 				  END;
 ```
-- Thirdly, based on the team that has higher average player ratings
+
+
+#### Thirdly, based on the team that has higher average player ratings
 
 ```SQL
 ALTER TABLE soc.MatchFin
@@ -861,7 +907,9 @@ SET Winner_Player_Avg = CASE WHEN home_avg_player_rating > away_avg_player_ratin
 						ELSE 'Tied'
 						END;
 ```
-- Lastly, based on the team that has higher total player ratings
+
+
+#### Lastly, based on the team that has higher total player ratings
 
 ```SQL
 ALTER TABLE soc.MatchFin
@@ -874,9 +922,10 @@ SET Winner_Player_Tot = CASE WHEN home_player_total_ratings > away_player_total_
 						END;
 ```
 
-### Comparison for Each Metric
 
-Here I compare the accuracy for each metric with the actual match results. The first query shows the overall result
+### Comparison for Each Metric
+#### Here I compare the accuracy for each metric with the actual match results. The first query shows the overall result
+
 ```SQL
 SELECT TeamOccurrences, PlayerAvgOccurrences, PlayerTotOccurrences, TotalOccurrences,
 		(CAST(TeamOccurrences AS decimal) / TotalOccurrences) * 100 AS TeamPercentage,
@@ -889,7 +938,9 @@ FROM	(SELECT
 		(SELECT COUNT(*) FROM soc.MatchFin) AS TotalOccurrences) AS Counts;
 ```
 
-The second query only shows matches that are not tied. It is done because the probability of having the same team, average player, and total ratings between the home and away teams would be tiny.
+
+#### The second query only shows matches that are not tied. It is done because the probability of having the same team, average player, and total ratings between the home and away teams would be tiny.
+
 ```SQL
 SELECT TeamOccurrences, PlayerAvgOccurrences, PlayerTotOccurrences, TotalOccurrences,
 		(CAST(TeamOccurrences AS decimal) / TotalOccurrences) * 100 AS TeamPercentage,
@@ -902,7 +953,9 @@ FROM	(SELECT
 		(SELECT COUNT(*) FROM soc.MatchFin WHERE Winner_Match <> 'Tied') AS TotalOccurrences) AS Counts;
 ```
 
-The third one only shows tied matches, used only to validate the previous result.
+
+#### The third one only shows tied matches, used only to validate the previous result.
+
 ```SQL
 SELECT TeamOccurrences, PlayerAvgOccurrences, PlayerTotOccurrences, TotalOccurrences,
 		(CAST(TeamOccurrences AS decimal) / TotalOccurrences) * 100 AS TeamPercentage,
@@ -915,14 +968,11 @@ FROM	(SELECT
 		(SELECT COUNT(*) FROM soc.MatchFin WHERE Winner_Match = 'Tied') AS TotalOccurrences) AS Counts;
 ```
 
+
 ### Home & Away Analysis
-
 Lastly, I analysed the team performance based on the home and away match to determine the winning percentage. 
-
 First, I combined the winner for both home and away matches grouped by the team, in which I could find the number of wins per team based on their home and away matches. 
-
 I also combined the home and away matches grouped by the team to get the total of matches.
-
 Then I combined those two queries based on the team so that I could calculate the winning percentage.
 
 ```SQL
@@ -984,9 +1034,11 @@ INNER JOIN
 ORDER BY TotalWinPercentage DESC;
 ```
 
+
 ## 5. Reporting and Visualization
 - Generate comprehensive reports and create interactive dashboards using SQL queries and visualization tools.
 - Present the key findings and insights from the data analysis.
+
 
 ## 6. Conclusion
 - Summarize the project and its accomplishments.
