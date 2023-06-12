@@ -1,7 +1,6 @@
 # European Soccer Data Preparation and Analysis
 
 ## Table of Contents
-
 1. [Introduction](#1-introduction)
 2. [Data Description and Preparation](#2-data-description-and-preparation)
  - [Dataset](#a-dataset)
@@ -22,22 +21,18 @@
  - [Total Player Ratings](#b-total-player-ratings)
  - [Winning Metric](#c-winning-metric)
  - [Comparison for Each Metric](#d-comparison-for-each-metric)
- - [Home & Away Analysis](#e-home-away-analysis)
+ - [Home & Away Analysis](#e-home--away-analysis)
 6. [Reporting and Visualisation](#6-reporting-and-visualization)
 7. [Conclusion](#7-conclusion)
 8. [Appendix](#8-appendix)
 
 ---
 
-
 ## 1. Introduction
-
 This portfolio showcases my skills in using SQL queries to perform complex data manipulation and analysis. This project aims to demonstrate my ability to work with SQL databases, clean and prepare data, perform exploratory data analysis, and generate meaningful insights. 
 This project analyses European soccer data to gain insight into team performance, player statistics and predict match outcomes. The query is performed using the Microsoft SQL Server Management Studio.
 
-
 ## 2. Data Description and Preparation
-
 ### A. Dataset
 The dataset that I am using is the European soccer data set obtained from [Kaggle](https://www.kaggle.com/datasets/hugomathien/soccer). It contains seven tables with the following description:
 
@@ -97,7 +92,6 @@ I selected each table's primary and foreign keys while establishing their relati
 ### C. Schema
 For this project, I created a schema so that it can be easily distinguished from the other dataset. The schema name I picked is soc.
 
-
 ## 3. Data Pre-Processing
 Before analysing the dataset, it is important to pre-process the data to ensure that it is clean, consistent, and ready for analysis. 
 
@@ -105,7 +99,6 @@ Before analysing the dataset, it is important to pre-process the data to ensure 
 Since there is 2 ID for the player and team, which is the api_id and fifa_id, I checked whether there is only one api_id for each fifa_id and vice versa.
 
 #### Team (team & team_attributes)
-
 ```SQL
 SELECT DISTINCT t1.team_api_id, t1.team_fifa_api_id
 FROM soc.Team /*Team_Attributes*/t1
@@ -152,7 +145,6 @@ INNER JOIN (
 ```
 
 #### Player (player & player_attributes)
-
 ```SQL
 /*More than 1 fifa id per 1 api id*/
 SELECT DISTINCT t1.player_api_id, t1.player_fifa_api_id
@@ -177,7 +169,7 @@ JOIN (
 ORDER BY player_fifa_api_id, player_api_id;
 ```
 
-![image](https://github.com/AMichaelDS/SQL/assets/132055953/16111b6d-9350-41a4-aa67-e930cfdc97d8)
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/ee834a8b-2405-4a34-befd-ff2428c5e677)
 
 Since the duplicate only exists on the player_attributes table, I did not remove any duplicates her because later by inner-joining the attribute table with the player table, it will be eliminated by itself.
 
@@ -204,7 +196,6 @@ WHERE buildUpPlayDribbling IS NULL;
 After completing all the previous sections, I joined the relevant table to create a unified dataset so that analysis could be easily performed later. I also transformed the date to YYYYMMDD format.
 
 #### Country & League
-
 ```SQL
 DROP TABLE IF EXISTS soc.Country_League;
 
@@ -218,7 +209,6 @@ ON C.country_id = L.country_id;
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/1253600e-f6a4-4bb3-8956-219a1a145b40)
 
 #### Team(team & team_attributes)
-
 ```SQL
 /* Joining*/
 DROP TABLE IF EXISTS soc.TeamFin;
@@ -240,7 +230,6 @@ EXEC sp_rename 'soc.TeamFin.team_api_id_team', 'team_api_id', 'COLUMN';
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/39d9ad51-3787-48eb-b47f-cfeaf20227e6)
 
 #### Player(player & player_attributes)
-
 ```SQL
 /* Joining */
 DROP TABLE IF EXISTS soc.PlayerFin;
@@ -438,9 +427,7 @@ SET Overall_Rating =
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/1166152d-2ecd-4478-9b63-8ffdeeb02539)
 
-
 ## 4. Exploratory Data Analysis
-
 After finishing the data preparation, we can now start analysing the dataset. 
 
 ### A. Analysis on Country and League
@@ -464,7 +451,7 @@ ORDER BY num_team;
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/16bdad11-1ea8-42d6-8ce5-3874b5f907b9)
 
-Here we can see that Spain Liga BBVA has the highest total goal.
+Here we can see that Spain Liga BBVA has the highest total goal which could imply that it is the most dominant league out of the other league.
 
 ### B. Analysis on Team
 To analyse this table, I picked only the latest assessment date for each team by using this query:
@@ -558,120 +545,144 @@ Here I performed a categorical analysis to find the distribution of teams across
 SELECT 
     buildUpPlaySpeedClass, 
     COUNT(*) AS buildUpPlaySpeedCount, 
-    ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS buildUpPlaySpeedPercentage
+    CAST(ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS decimal(10, 2)) AS buildUpPlaySpeedPercentage
 FROM soc.analysis_team
 GROUP BY buildUpPlaySpeedClass;
 ```
+
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/62500a6e-b354-465a-a319-5f6a9812a8cb)
 
 ```SQL
 -- buildUpPlayDribblingClass
 SELECT 
     buildUpPlayDribblingClass, 
     COUNT(*) AS buildUpPlayDribblingCount, 
-    ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS buildUpPlayDribblingPercentage
+    CAST(ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS decimal(10, 2)) AS buildUpPlayDribblingPercentage
 FROM soc.analysis_team
 GROUP BY buildUpPlayDribblingClass;
 ```
+
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/bfe0c535-771d-439f-8e14-e43b93559160)
 
 ```SQL
 -- buildUpPlayPassingClass
 SELECT 
     buildUpPlayPassingClass, 
     COUNT(*) AS buildUpPlayPassingCount, 
-    ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS buildUpPlayPassingPercentage
+    CAST(ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS decimal(10, 2)) AS buildUpPlayPassingPercentage
 FROM soc.analysis_team
 GROUP BY buildUpPlayPassingClass;
 ```
+
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/0ae7d854-591e-4578-94f6-4fde9ef414be)
 
 ```SQL
 -- buildUpPlayPositioningClass
 SELECT 
     buildUpPlayPositioningClass, 
     COUNT(*) AS buildUpPlayPositioningCount, 
-    ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS buildUpPlayPositioningPercentage
+    CAST(ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS decimal(10, 2)) AS buildUpPlayPositioningPercentage
 FROM soc.analysis_team
 GROUP BY buildUpPlayPositioningClass;
 ```
+
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/4a3a14b0-951e-4755-8f0a-4aae850dcf20)
 
 ```SQL
 -- chanceCreationPassingClass
 SELECT 
     chanceCreationPassingClass, 
     COUNT(*) AS chanceCreationPassingCount, 
-    ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS chanceCreationPassingPercentage
+    CAST(ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS decimal(10, 2)) AS chanceCreationPassingPercentage
 FROM soc.analysis_team
 GROUP BY chanceCreationPassingClass;
 ```
+
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/ae9854cb-c033-470e-af2a-a9e5b5d39002)
 
 ```SQL
 -- chanceCreationCrossingClass
 SELECT 
     chanceCreationCrossingClass, 
     COUNT(*) AS chanceCreationCrossingCount, 
-    ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS chanceCreationCrossingPercentage
+    CAST(ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS decimal(10, 2)) AS chanceCreationCrossingPercentage
 FROM soc.analysis_team
 GROUP BY chanceCreationCrossingClass;
 ```
+
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/e8d60518-7736-4c81-9185-ecbb800242bb)
 
 ```SQL
 -- chanceCreationShootingClass
 SELECT 
     chanceCreationShootingClass, 
     COUNT(*) AS chanceCreationShootingCount, 
-    ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS chanceCreationShootingPercentage
+    CAST(ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS decimal(10, 2)) AS chanceCreationShootingPercentage
 FROM soc.analysis_team
 GROUP BY chanceCreationShootingClass;
 ```
+
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/05e76efe-ba39-4390-b520-9fbbe9f1d816)
 
 ```SQL
 -- chanceCreationPositioningClass
 SELECT 
     chanceCreationPositioningClass, 
     COUNT(*) AS chanceCreationPositioningCount, 
-    ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS chanceCreationPositioningPercentage
+    CAST(ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS decimal(10, 2)) AS chanceCreationPositioningPercentage
 FROM soc.analysis_team
 GROUP BY chanceCreationPositioningClass;
 ```
+
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/69df8936-d33a-4e92-97d0-4a7b5ebdbb43)
 
 ```SQL
 -- defencePressureClass
 SELECT 
     defencePressureClass, 
     COUNT(*) AS defencePressureCount, 
-    ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS defencePressurePercentage
+    CAST(ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS decimal(10, 2)) AS defencePressurePercentage
 FROM soc.analysis_team
 GROUP BY defencePressureClass;
 ```
+
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/42a28dd2-0b68-4946-9405-974f6b6c6fb2)
 
 ```SQL
 -- defenceAggressionClass
 SELECT 
     defenceAggressionClass, 
     COUNT(*) AS defenceAggressionCount, 
-    ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS defenceAggressionPercentage
+    CAST(ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS decimal(10, 2)) AS defenceAggressionPercentage
 FROM soc.analysis_team
 GROUP BY defenceAggressionClass;
 ```
+
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/f009a32c-c8f6-429d-b940-fb7c4f1f531e)
 
 ```SQL
 -- defenceTeamWidthClass
 SELECT 
     defenceTeamWidthClass, 
     COUNT(*) AS defenceTeamWidthCount, 
-    ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS defenceTeamWidthPercentage
+    CAST(ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS decimal(10, 2)) AS defenceTeamWidthPercentage
 FROM soc.analysis_team
 GROUP BY defenceTeamWidthClass;
 ```
+
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/19baf585-e1fb-4699-8eac-945f9b55e03f)
 
 ```SQL
 -- defenceDefenderLineClass
 SELECT 
     defenceDefenderLineClass, 
     COUNT(*) AS defenceDefenderLineCount, 
-    ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS defenceDefenderLinePercentage
+    CAST(ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS decimal(10, 2)) AS defenceDefenderLinePercentage
 FROM soc.analysis_team
 GROUP BY defenceDefenderLineClass;
 ```
+
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/38af477b-c6d1-4740-a37e-790ce31b11dd)
 
 ### C. Analysis on Player
 Like what I did for TeamFin, I picked only the latest assessment date for each player.
@@ -690,6 +701,8 @@ INNER JOIN (
 WHERE overall_rating IS NOT NULL /*to remove the duplicate record*/
 ORDER BY player_name;
 ```
+
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/97435005-d29f-409c-ba2a-c228db5e2692)
 
 #### Highest Overall Team Rating
 I selected ten players with the highest rating
@@ -740,42 +753,48 @@ WHERE TABLE_SCHEMA = 'soc'
 EXEC sp_executesql @sql;
 ```
 
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/562b8b72-b51a-4400-899d-54266dcb554d)
+
 #### Categorical Analysis
 Here I performed a categorical analysis to find the distribution of players across the categorical attribute. It is done to get a relative representation of players in different categories within each attribute.
-
 
 ```SQL
 -- Count and percentage of players by preferred foot
 SELECT 
     preferred_foot,
     COUNT(*) AS playerCount,
-    ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.Analysis_Player), 2) AS playerPercentage
+    CAST(ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.Analysis_Player), 2) AS decimal(10,2)) AS playerPercentage
 FROM soc.Analysis_Player
 GROUP BY preferred_foot;
 ```
+
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/3d89bc65-c3d0-425a-af77-85cd1ebf4f0d)
 
 ```SQL
 -- Count and percentage of players by attacking work rate
 SELECT 
     attacking_work_rate,
     COUNT(*) AS playerCount,
-    ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.Analysis_Player), 2) AS playerPercentage
+    CAST(ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.Analysis_Player), 2) AS decimal(10,2)) AS playerPercentage
 FROM soc.Analysis_Player
 GROUP BY attacking_work_rate;
 ```
+
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/c869d14a-c4c7-47be-bc14-2e84db81fc04)
 
 ```SQL
 -- Count and percentage of players by defensive work rate
 SELECT 
     defensive_work_rate,
     COUNT(*) AS playerCount,
-    ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.Analysis_Player), 2) AS playerPercentage
+    CAST(ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.Analysis_Player), 2) AS decimal(10,2)) AS playerPercentage
 FROM soc.Analysis_Player
 GROUP BY defensive_work_rate;
 ```
 
-## 5. Data Analysis and Complex Data Manipulation
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/7af7bcaa-d8c7-4ae0-a13e-841f123ca775)
 
+## 5. Data Analysis and Complex Data Manipulation
 ### A. Average Player Ratings
 For MatchFin, I created an average rating of players for each team(home & away).  
 First, it counted the number of players on the team with null value and summed it up. For teams where all the player rating is null, the average becomes 0. It is done to avoid dividing by 0 later on.
@@ -880,6 +899,8 @@ END,
 END;
 ```
 
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/01c187b5-aa13-44f3-88d4-10ec68f6dbbe)
+
 ### B. Total Player Ratings
 I used the average player ratings I created to replace the null values for each corresponding team before adding them all up to create total player ratings.
 
@@ -915,11 +936,12 @@ SET home_player_total_ratings =
   COALESCE(away_player_11_rating, away_avg_player_rating);
 ```
 
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/7a587beb-f9c3-4adb-a8b8-ca41e1884c71)
+
 ### C. Winning Metric
 Then I proceed to create four winning metrics. 
 
 #### First, based on the actual match result
-
 ```SQL
 ALTER TABLE soc.MatchFin
 ADD Winner_Match VARCHAR(10);
@@ -931,8 +953,9 @@ SET Winner_Match = CASE WHEN home_team_goal > away_team_goal THEN 'Home'
 				   END;
 ```
 
-#### Secondly, based on the team that has higher ratings
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/203f8c3b-6ffa-406a-bd3a-8c86e2f26e00)
 
+#### Secondly, based on the team that has higher ratings
 ```SQL
 ALTER TABLE soc.MatchFin
 ADD Winner_Team VARCHAR(10);
@@ -944,8 +967,9 @@ SET Winner_Team = CASE WHEN home_team_rating > away_team_rating THEN 'Home'
 				  END;
 ```
 
-#### Thirdly, based on the team that has higher average player ratings
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/b24f5c47-af85-4555-b5ee-17200d6b5d06)
 
+#### Thirdly, based on the team that has higher average player ratings
 ```SQL
 ALTER TABLE soc.MatchFin
 ADD Winner_Player_Avg VARCHAR(10);
@@ -957,8 +981,9 @@ SET Winner_Player_Avg = CASE WHEN home_avg_player_rating > away_avg_player_ratin
 						END;
 ```
 
-#### Lastly, based on the team that has higher total player ratings
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/0f066f8f-6e6a-40a8-9f1c-2fe628bcc807)
 
+#### Lastly, based on the team that has higher total player ratings
 ```SQL
 ALTER TABLE soc.MatchFin
 ADD Winner_Player_Tot VARCHAR(10);
@@ -970,48 +995,53 @@ SET Winner_Player_Tot = CASE WHEN home_player_total_ratings > away_player_total_
 						END;
 ```
 
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/84419f4e-e0fe-4a31-b571-712fd5c992a3)
+
 ### D. Comparison for Each Metric
 #### Here I compare the accuracy for each metric with the actual match results. The first query shows the overall result
-
 ```SQL
 SELECT TeamOccurrences, PlayerAvgOccurrences, PlayerTotOccurrences, TotalOccurrences,
-		(CAST(TeamOccurrences AS decimal) / TotalOccurrences) * 100 AS TeamPercentage,
-		(CAST(PlayerAvgOccurrences AS decimal) / TotalOccurrences) * 100 AS PlayerAvgPercentage,
-		(CAST(PlayerTotOccurrences AS decimal) / TotalOccurrences) * 100 AS PlayerTotPercentage
-FROM	(SELECT
-		(SELECT COUNT(*) FROM soc.MatchFin WHERE Winner_Team = Winner_Match) AS TeamOccurrences,
-		(SELECT COUNT(*) FROM soc.MatchFin WHERE Winner_Player_Avg = Winner_Match) AS PlayerAvgOccurrences,
-		(SELECT COUNT(*) FROM soc.MatchFin WHERE Winner_Player_Tot = Winner_Match) AS PlayerTotOccurrences,
-		(SELECT COUNT(*) FROM soc.MatchFin) AS TotalOccurrences) AS Counts;
+    CAST((CAST(TeamOccurrences AS decimal) / TotalOccurrences) * 100 AS decimal(10,2)) AS TeamPercentage,
+    CAST((CAST(PlayerAvgOccurrences AS decimal) / TotalOccurrences) * 100 AS decimal(10,2)) AS PlayerAvgPercentage,
+    CAST((CAST(PlayerTotOccurrences AS decimal) / TotalOccurrences) * 100 AS decimal(10,2)) AS PlayerTotPercentage
+FROM    (SELECT
+        (SELECT COUNT(*) FROM soc.MatchFin WHERE Winner_Team = Winner_Match) AS TeamOccurrences,
+        (SELECT COUNT(*) FROM soc.MatchFin WHERE Winner_Player_Avg = Winner_Match) AS PlayerAvgOccurrences,
+        (SELECT COUNT(*) FROM soc.MatchFin WHERE Winner_Player_Tot = Winner_Match) AS PlayerTotOccurrences,
+        (SELECT COUNT(*) FROM soc.MatchFin) AS TotalOccurrences) AS Counts;
 ```
+
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/2578d91d-ee9d-474a-a9c1-18c8d4da4dd5)
 
 #### The second query only shows matches that are not tied. It is done because the probability of having the same team, average player, and total ratings between the home and away teams would be tiny.
-
 ```SQL
 SELECT TeamOccurrences, PlayerAvgOccurrences, PlayerTotOccurrences, TotalOccurrences,
-		(CAST(TeamOccurrences AS decimal) / TotalOccurrences) * 100 AS TeamPercentage,
-		(CAST(PlayerAvgOccurrences AS decimal) / TotalOccurrences) * 100 AS PlayerAvgPercentage,
-		(CAST(PlayerTotOccurrences AS decimal) / TotalOccurrences) * 100 AS PlayerTotPercentage
-FROM	(SELECT
-		(SELECT COUNT(*) FROM soc.MatchFin WHERE Winner_Team = Winner_Match AND Winner_Team <> 'Tied' AND Winner_Match <> 'Tied') AS TeamOccurrences,
-		(SELECT COUNT(*) FROM soc.MatchFin WHERE Winner_Player_Avg = Winner_Match AND Winner_Player_Avg <> 'Tied' AND Winner_Match <> 'Tied') AS PlayerAvgOccurrences,
-		(SELECT COUNT(*) FROM soc.MatchFin WHERE Winner_Player_Tot = Winner_Match AND Winner_Player_Tot <> 'Tied' AND Winner_Match <> 'Tied') AS PlayerTotOccurrences,
-		(SELECT COUNT(*) FROM soc.MatchFin WHERE Winner_Match <> 'Tied') AS TotalOccurrences) AS Counts;
+    CAST((CAST(TeamOccurrences AS decimal) / TotalOccurrences) * 100 AS decimal(10,2)) AS TeamPercentage,
+    CAST((CAST(PlayerAvgOccurrences AS decimal) / TotalOccurrences) * 100 AS decimal(10,2)) AS PlayerAvgPercentage,
+    CAST((CAST(PlayerTotOccurrences AS decimal) / TotalOccurrences) * 100 AS decimal(10,2)) AS PlayerTotPercentage
+FROM    (SELECT
+        (SELECT COUNT(*) FROM soc.MatchFin WHERE Winner_Team = Winner_Match AND Winner_Team <> 'Tied' AND Winner_Match <> 'Tied') AS TeamOccurrences,
+        (SELECT COUNT(*) FROM soc.MatchFin WHERE Winner_Player_Avg = Winner_Match AND Winner_Player_Avg <> 'Tied' AND Winner_Match <> 'Tied') AS PlayerAvgOccurrences,
+        (SELECT COUNT(*) FROM soc.MatchFin WHERE Winner_Player_Tot = Winner_Match AND Winner_Player_Tot <> 'Tied' AND Winner_Match <> 'Tied') AS PlayerTotOccurrences,
+        (SELECT COUNT(*) FROM soc.MatchFin WHERE Winner_Match <> 'Tied') AS TotalOccurrences) AS Counts;
 ```
+
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/d3398703-670d-45a8-ae30-9fd035a73561)
 
 #### The third one only shows tied matches, used only to validate the previous result.
-
 ```SQL
 SELECT TeamOccurrences, PlayerAvgOccurrences, PlayerTotOccurrences, TotalOccurrences,
-		(CAST(TeamOccurrences AS decimal) / TotalOccurrences) * 100 AS TeamPercentage,
-		(CAST(PlayerAvgOccurrences AS decimal) / TotalOccurrences) * 100 AS PlayerAvgPercentage,
-		(CAST(PlayerTotOccurrences AS decimal) / TotalOccurrences) * 100 AS PlayerTotPercentage
-FROM	(SELECT
-		(SELECT COUNT(*) FROM soc.MatchFin WHERE Winner_Team = Winner_Match AND Winner_Match = 'Tied') AS TeamOccurrences,
-		(SELECT COUNT(*) FROM soc.MatchFin WHERE Winner_Player_Avg = Winner_Match AND Winner_Match = 'Tied') AS PlayerAvgOccurrences,
-		(SELECT COUNT(*) FROM soc.MatchFin WHERE Winner_Player_Tot = Winner_Match AND Winner_Match = 'Tied') AS PlayerTotOccurrences,
-		(SELECT COUNT(*) FROM soc.MatchFin WHERE Winner_Match = 'Tied') AS TotalOccurrences) AS Counts;
+    CAST((CAST(TeamOccurrences AS decimal) / TotalOccurrences) * 100 AS decimal(10,2)) AS TeamPercentage,
+    CAST((CAST(PlayerAvgOccurrences AS decimal) / TotalOccurrences) * 100 AS decimal(10,2)) AS PlayerAvgPercentage,
+    CAST((CAST(PlayerTotOccurrences AS decimal) / TotalOccurrences) * 100 AS decimal(10,2)) AS PlayerTotPercentage
+FROM    (SELECT
+        (SELECT COUNT(*) FROM soc.MatchFin WHERE Winner_Team = Winner_Match AND Winner_Match = 'Tied') AS TeamOccurrences,
+        (SELECT COUNT(*) FROM soc.MatchFin WHERE Winner_Player_Avg = Winner_Match AND Winner_Match = 'Tied') AS PlayerAvgOccurrences,
+        (SELECT COUNT(*) FROM soc.MatchFin WHERE Winner_Player_Tot = Winner_Match AND Winner_Match = 'Tied') AS PlayerTotOccurrences,
+        (SELECT COUNT(*) FROM soc.MatchFin WHERE Winner_Match = 'Tied') AS TotalOccurrences) AS Counts;
 ```
+
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/994c3219-c37f-40af-9e4f-a39a9050367f)
 
 ### E. Home & Away Analysis
 Lastly, I analysed the team performance based on the home and away match to determine the winning percentage. 
@@ -1079,6 +1109,7 @@ INNER JOIN
 ORDER BY TotalWinPercentage DESC;
 ```
 
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/02ddb571-f595-4df0-81bd-a15843985e19)
 
 ## 6. Reporting and Visualization
 - Generate comprehensive reports and create interactive dashboards using SQL queries and visualization tools.
