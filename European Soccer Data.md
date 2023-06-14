@@ -451,6 +451,8 @@ ORDER BY num_team;
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/16bdad11-1ea8-42d6-8ce5-3874b5f907b9)
 
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/fd07b91b-049c-4493-bab8-5f236acf25ca)
+
 Here we can see that Spain Liga BBVA has the highest total goal which could imply that it is the most dominant league out of the other league.
 
 ### B. Analysis on Team
@@ -503,6 +505,8 @@ ORDER BY overall_rating DESC;
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/edab345c-650d-4e8d-b4cd-1d0d9f35044b)
 
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/2d64b704-449b-4a53-8854-f580817bc07d)
+
 #### Numerical Analysis 
 I used a dynamic SQL script to create tables containing team with the highest performance metrics for each numerical attribute.
 
@@ -537,23 +541,32 @@ EXEC sp_executesql @sql;
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/20461c3e-d655-478a-a3b8-c63dd5f9e79e)
 
+Let us take a look at one example. Here we can see that the table shows only 1 row containing team with the highest buildUpPlaySpeed
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/4e1648fc-25f3-49f6-9dc2-ee2f30044aca)
+
+
 #### Categorical Analysis
 Here I performed a categorical analysis to find the distribution of teams across the categorical attribute. It is done to get a relative representation of teams in different categories within each attribute.
 
+<details>
+<summary>Build-Up Play Speed Class</summary>
+
 ```SQL
--- buildUpPlaySpeedClass
 SELECT 
     buildUpPlaySpeedClass, 
     COUNT(*) AS buildUpPlaySpeedCount, 
     CAST(ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS decimal(10, 2)) AS buildUpPlaySpeedPercentage
 FROM soc.analysis_team
 GROUP BY buildUpPlaySpeedClass;
-```
-
+```	
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/62500a6e-b354-465a-a319-5f6a9812a8cb)
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/f60551c9-7813-4122-a432-403d769d72ca)
+</details>
 
+<details>
+<summary>Build-Up Play Dribbling Class</summary>
+	
 ```SQL
--- buildUpPlayDribblingClass
 SELECT 
     buildUpPlayDribblingClass, 
     COUNT(*) AS buildUpPlayDribblingCount, 
@@ -563,9 +576,13 @@ GROUP BY buildUpPlayDribblingClass;
 ```
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/bfe0c535-771d-439f-8e14-e43b93559160)
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/7345a932-4585-4c2a-9244-1c95126ddaa1)
+</details>
 
+<details>
+<summary>Build-Up Play Passing Class</summary>
+	
 ```SQL
--- buildUpPlayPassingClass
 SELECT 
     buildUpPlayPassingClass, 
     COUNT(*) AS buildUpPlayPassingCount, 
@@ -575,9 +592,13 @@ GROUP BY buildUpPlayPassingClass;
 ```
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/0ae7d854-591e-4578-94f6-4fde9ef414be)
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/1f3836b5-746b-4b0a-bd5d-0cff07208dde)
+</details>
+
+<details>
+<summary>Build-Up Play Positioning Class</summary>
 
 ```SQL
--- buildUpPlayPositioningClass
 SELECT 
     buildUpPlayPositioningClass, 
     COUNT(*) AS buildUpPlayPositioningCount, 
@@ -587,9 +608,13 @@ GROUP BY buildUpPlayPositioningClass;
 ```
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/4a3a14b0-951e-4755-8f0a-4aae850dcf20)
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/39e7b0a0-121a-4f2c-8e6a-9c78c6a52ab7)
+</details>
+
+<details>
+<summary>Chance Creation Passing Class</summary>
 
 ```SQL
--- chanceCreationPassingClass
 SELECT 
     chanceCreationPassingClass, 
     COUNT(*) AS chanceCreationPassingCount, 
@@ -599,9 +624,13 @@ GROUP BY chanceCreationPassingClass;
 ```
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/ae9854cb-c033-470e-af2a-a9e5b5d39002)
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/ec1c6197-29fd-4bbc-8603-db0607af9c2d)
+</details>
+
+<details>
+<summary>Chance Creation Crossing Class</summary>
 
 ```SQL
--- chanceCreationCrossingClass
 SELECT 
     chanceCreationCrossingClass, 
     COUNT(*) AS chanceCreationCrossingCount, 
@@ -611,9 +640,13 @@ GROUP BY chanceCreationCrossingClass;
 ```
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/e8d60518-7736-4c81-9185-ecbb800242bb)
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/e0ac2d31-16b1-4dca-bc8a-9b4f4fc9a9bc)
+</details>
+
+<details>
+<summary>Chance Creation Shooting Class</summary>
 
 ```SQL
--- chanceCreationShootingClass
 SELECT 
     chanceCreationShootingClass, 
     COUNT(*) AS chanceCreationShootingCount, 
@@ -623,9 +656,13 @@ GROUP BY chanceCreationShootingClass;
 ```
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/05e76efe-ba39-4390-b520-9fbbe9f1d816)
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/0174bd15-76cb-452b-9ef6-f97fc2a6ff0b)
+</details>
+
+<details>
+<summary>Chance Creation Positioning Class</summary>
 
 ```SQL
--- chanceCreationPositioningClass
 SELECT 
     chanceCreationPositioningClass, 
     COUNT(*) AS chanceCreationPositioningCount, 
@@ -635,9 +672,13 @@ GROUP BY chanceCreationPositioningClass;
 ```
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/69df8936-d33a-4e92-97d0-4a7b5ebdbb43)
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/75408fcb-ce1d-42fc-b649-bd2078536505)
+</details>
+
+<details>
+<summary>Defence Pressure Class</summary>
 
 ```SQL
--- defencePressureClass
 SELECT 
     defencePressureClass, 
     COUNT(*) AS defencePressureCount, 
@@ -647,9 +688,14 @@ GROUP BY defencePressureClass;
 ```
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/42a28dd2-0b68-4946-9405-974f6b6c6fb2)
+	
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/a7530f0a-8130-4b92-8d34-4b3509b36dbd)
+</details>
+
+<details>
+<summary>Defence Aggression Class</summary>
 
 ```SQL
--- defenceAggressionClass
 SELECT 
     defenceAggressionClass, 
     COUNT(*) AS defenceAggressionCount, 
@@ -659,9 +705,13 @@ GROUP BY defenceAggressionClass;
 ```
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/f009a32c-c8f6-429d-b940-fb7c4f1f531e)
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/a71b9f3b-43e1-4e7d-aebb-06ece7aa945f)
+</details>
+
+<details>
+<summary>Defence Team Width Class</summary>
 
 ```SQL
--- defenceTeamWidthClass
 SELECT 
     defenceTeamWidthClass, 
     COUNT(*) AS defenceTeamWidthCount, 
@@ -671,9 +721,13 @@ GROUP BY defenceTeamWidthClass;
 ```
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/19baf585-e1fb-4699-8eac-945f9b55e03f)
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/8adef15b-f6e5-4bb9-903c-2a1db65b55b5)
+</details>
+
+<details>
+<summary>Defence Defender Line Class</summary>
 
 ```SQL
--- defenceDefenderLineClass
 SELECT 
     defenceDefenderLineClass, 
     COUNT(*) AS defenceDefenderLineCount, 
@@ -683,6 +737,8 @@ GROUP BY defenceDefenderLineClass;
 ```
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/38af477b-c6d1-4740-a37e-790ce31b11dd)
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/cc675d7b-6386-4c4f-a27a-3ebcbba32fb8)
+</details>
 
 ### C. Analysis on Player
 Like what I did for TeamFin, I picked only the latest assessment date for each player.
@@ -714,6 +770,8 @@ ORDER BY overall_rating DESC;
 ```
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/362621b6-cd54-4934-8b27-732925a8552f)
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/f821eb9c-0639-45d5-bfa2-2884bb0860e8)
+
 
 #### Highest For Each Rating
 I use dynamic SQL script to create tables containing player with the highest rating for each attribute. 
@@ -758,8 +816,10 @@ EXEC sp_executesql @sql;
 #### Categorical Analysis
 Here I performed a categorical analysis to find the distribution of players across the categorical attribute. It is done to get a relative representation of players in different categories within each attribute.
 
+<details>
+<summary>Count and percentage of players by preferred foot</summary>
+	
 ```SQL
--- Count and percentage of players by preferred foot
 SELECT 
     preferred_foot,
     COUNT(*) AS playerCount,
@@ -769,9 +829,14 @@ GROUP BY preferred_foot;
 ```
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/3d89bc65-c3d0-425a-af77-85cd1ebf4f0d)
+	
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/cf216695-db87-4706-88ed-2277dcc5e670)
+</details>
 
+<details>
+<summary>Count and percentage of players by attacking work rate</summary>
+	
 ```SQL
--- Count and percentage of players by attacking work rate
 SELECT 
     attacking_work_rate,
     COUNT(*) AS playerCount,
@@ -781,9 +846,14 @@ GROUP BY attacking_work_rate;
 ```
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/c869d14a-c4c7-47be-bc14-2e84db81fc04)
+	
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/56c61596-7177-4567-9d2a-a8ac7bd13080)
+</details>
 
+<details>
+<summary>Count and percentage of players by defensive work rate</summary>
+	
 ```SQL
--- Count and percentage of players by defensive work rate
 SELECT 
     defensive_work_rate,
     COUNT(*) AS playerCount,
@@ -793,6 +863,9 @@ GROUP BY defensive_work_rate;
 ```
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/7af7bcaa-d8c7-4ae0-a13e-841f123ca775)
+	
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/92ea703a-74fb-462f-833e-cc226756c485)
+</details>
 
 ## 5. Data Analysis and Complex Data Manipulation
 ### A. Average Player Ratings
