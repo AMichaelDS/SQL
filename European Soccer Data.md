@@ -1245,10 +1245,11 @@ ORDER BY TotalWinPercentage DESC;
 
 
 ## 6. Conclusion
-- Summarize the project and its accomplishments.
-- Reflect on the insights gained and their implications.
-- Discuss the strengths and limitations of your analysis.
-- Highlight the lessons learned during the process and suggest future enhancements or areas for further exploration.
+In this portfolio project, I have demonstrated my skills in working with SQL queries and performing various data operations on the "soc" database. Throughout the project, I have showcased my ability to extract, manipulate, and analyze data to derive meaningful insights.
+
+
+
+Overall, this portfolio project showcases my proficiency in SQL and my ability to work with complex queries and data manipulation tasks. The project highlights my skills in database management, data analysis, and data transformation, which are essential in extracting valuable insights and making informed decisions based on the available data.
 
 
 ## 7. Appendix
