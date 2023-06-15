@@ -1245,11 +1245,15 @@ ORDER BY TotalWinPercentage DESC;
 
 
 ## 6. Conclusion
-In this portfolio project, I have demonstrated my skills in working with SQL queries and performing various data operations on the "soc" database. Throughout the project, I have showcased my ability to extract, manipulate, and analyze data to derive meaningful insights.
+In conclusion, this project demonstrates my skills and expertise in utilizing SQL queries for data analysis and manipulation. The project aimed to showcase my proficiency in working with SQL databases, data cleaning and preparation, exploratory data analysis, and generating meaningful insights.
 
+Throughout the project, I effectively described and prepared the data, ensuring its quality and reliability for analysis. I performed data pre-processing tasks such as removing duplicates, eliminating null values, integrating and transforming the data, cleaning it, and conducting feature engineering to enhance its usefulness.
 
+The exploratory data analysis section provided valuable insights into various aspects of the dataset. I analyzed different dimensions such as country and league, team, and player, uncovering patterns and trends that contribute to a better understanding of the data. This analysis included metrics like average player ratings, total player ratings, winning metrics, and comparisons for each metric, offering comprehensive insights into team performance and player statistics. Additionally, the analysis of home and away matches provided further understanding of performance variations in different settings.
 
-Overall, this portfolio project showcases my proficiency in SQL and my ability to work with complex queries and data manipulation tasks. The project highlights my skills in database management, data analysis, and data transformation, which are essential in extracting valuable insights and making informed decisions based on the available data.
+By leveraging SQL queries, I effectively manipulated and analyzed the complex data, enabling me to draw meaningful conclusions. The project demonstrates my ability to derive insights from data and utilize them for strategic decision-making, predictive modeling, and performance evaluation.
+
+Overall, this project showcases my competence in SQL, data analysis, and problem-solving. It highlights my capability to work with real-world datasets, clean and preprocess data, perform exploratory analysis, and generate valuable insights. The skills demonstrated in this project are applicable across various industries and can contribute to data-driven decision-making and actionable recommendations.
 
 
 ## 7. Appendix
