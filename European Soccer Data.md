@@ -22,9 +22,8 @@
  - [Winning Metric](#c-winning-metric)
  - [Comparison for Each Metric](#d-comparison-for-each-metric)
  - [Home & Away Analysis](#e-home--away-analysis)
-6. [Reporting and Visualisation](#6-reporting-and-visualization)
-7. [Conclusion](#7-conclusion)
-8. [Appendix](#8-appendix)
+6. [Conclusion](#6-conclusion)
+7. [Appendix](#7-appendix)
 
 ---
 
@@ -68,7 +67,7 @@ CLOSE column_cursor;
 DEALLOCATE column_cursor;
 ```
 
-Please check [Appendix](#8-appendix) to see column information
+Please check [Appendix](#7-appendix) to see column information
 ```SQL
 --Query to get column information
 SELECT TABLE_NAME AS [Table Name], COLUMN_NAME AS [Column], DATA_TYPE AS [Data Type], IS_NULLABLE AS [Is Nullable]
@@ -507,6 +506,8 @@ ORDER BY overall_rating DESC;
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/2d64b704-449b-4a53-8854-f580817bc07d)
 
+Lazio has the highest overall rating out of all the team.
+
 #### Numerical Analysis 
 I used a dynamic SQL script to create tables containing team with the highest performance metrics for each numerical attribute.
 
@@ -538,30 +539,65 @@ FROM (
 
 EXEC sp_executesql @sql;
 ```
-
+Here is all the table that is created using the query above
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/20461c3e-d655-478a-a3b8-c63dd5f9e79e)
 
-Let us take a look at one example. Here we can see that the table shows only 1 row containing team with the highest buildUpPlaySpeed
-![image](https://github.com/AMichaelDS/SQL/assets/132055953/4e1648fc-25f3-49f6-9dc2-ee2f30044aca)
+<details>
+<summary>Build Up Play Dribbling</summary>
+	
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/9d0a2446-3817-4d62-bf43-5c99b1080d5b)
+</details>
 
+<details>
+<summary>Build-Up Play Passing</summary>
+
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/42d40609-4982-43a1-bf68-80d61fefa7a4)	
+</details>
+
+<details>
+<summary>Build-Up Play Speed</summary>
+	
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/269ad582-128d-4758-b2e5-651b95e1326d)
+</details>
+
+<details>
+<summary>Chance Creation Crossing</summary>
+	
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/69563bca-1921-4786-9e1d-e0b1f00f7ced)
+</details>
+
+<details>
+<summary>Chance Creation Passing</summary>
+
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/77756a8e-8659-4ce5-ba2a-569c7f8b921f)
+</details>
+
+<details>
+<summary>Chance Creation Shooting</summary>
+
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/e1a82838-f48d-4ed3-91fc-a9a631b35716)
+</details>
+
+<details>
+<summary>Defence Aggression</summary>
+
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/7548f732-6bcf-48ee-aa58-11ce2f96d8bd)
+</details>
+
+<details>
+<summary>Defence Pressure</summary>
+
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/e623f3c0-8250-4de5-82c4-600d723a24d8)
+</details>
+
+<details>
+<summary>Defence Team Width</summary>
+
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/94e4fe5e-6442-46af-a107-35c8f11144e9)
+</details>
 
 #### Categorical Analysis
 Here I performed a categorical analysis to find the distribution of teams across the categorical attribute. It is done to get a relative representation of teams in different categories within each attribute.
-
-<details>
-<summary>Build-Up Play Speed Class</summary>
-
-```SQL
-SELECT 
-    buildUpPlaySpeedClass, 
-    COUNT(*) AS buildUpPlaySpeedCount, 
-    CAST(ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS decimal(10, 2)) AS buildUpPlaySpeedPercentage
-FROM soc.analysis_team
-GROUP BY buildUpPlaySpeedClass;
-```	
-![image](https://github.com/AMichaelDS/SQL/assets/132055953/62500a6e-b354-465a-a319-5f6a9812a8cb)
-![image](https://github.com/AMichaelDS/SQL/assets/132055953/f60551c9-7813-4122-a432-403d769d72ca)
-</details>
 
 <details>
 <summary>Build-Up Play Dribbling Class</summary>
@@ -612,19 +648,18 @@ GROUP BY buildUpPlayPositioningClass;
 </details>
 
 <details>
-<summary>Chance Creation Passing Class</summary>
+<summary>Build-Up Play Speed Class</summary>
 
 ```SQL
 SELECT 
-    chanceCreationPassingClass, 
-    COUNT(*) AS chanceCreationPassingCount, 
-    CAST(ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS decimal(10, 2)) AS chanceCreationPassingPercentage
+    buildUpPlaySpeedClass, 
+    COUNT(*) AS buildUpPlaySpeedCount, 
+    CAST(ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS decimal(10, 2)) AS buildUpPlaySpeedPercentage
 FROM soc.analysis_team
-GROUP BY chanceCreationPassingClass;
-```
-
-![image](https://github.com/AMichaelDS/SQL/assets/132055953/ae9854cb-c033-470e-af2a-a9e5b5d39002)
-![image](https://github.com/AMichaelDS/SQL/assets/132055953/ec1c6197-29fd-4bbc-8603-db0607af9c2d)
+GROUP BY buildUpPlaySpeedClass;
+```	
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/62500a6e-b354-465a-a319-5f6a9812a8cb)
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/f60551c9-7813-4122-a432-403d769d72ca)
 </details>
 
 <details>
@@ -644,19 +679,19 @@ GROUP BY chanceCreationCrossingClass;
 </details>
 
 <details>
-<summary>Chance Creation Shooting Class</summary>
+<summary>Chance Creation Passing Class</summary>
 
 ```SQL
 SELECT 
-    chanceCreationShootingClass, 
-    COUNT(*) AS chanceCreationShootingCount, 
-    CAST(ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS decimal(10, 2)) AS chanceCreationShootingPercentage
+    chanceCreationPassingClass, 
+    COUNT(*) AS chanceCreationPassingCount, 
+    CAST(ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS decimal(10, 2)) AS chanceCreationPassingPercentage
 FROM soc.analysis_team
-GROUP BY chanceCreationShootingClass;
+GROUP BY chanceCreationPassingClass;
 ```
 
-![image](https://github.com/AMichaelDS/SQL/assets/132055953/05e76efe-ba39-4390-b520-9fbbe9f1d816)
-![image](https://github.com/AMichaelDS/SQL/assets/132055953/0174bd15-76cb-452b-9ef6-f97fc2a6ff0b)
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/ae9854cb-c033-470e-af2a-a9e5b5d39002)
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/ec1c6197-29fd-4bbc-8603-db0607af9c2d)
 </details>
 
 <details>
@@ -673,6 +708,54 @@ GROUP BY chanceCreationPositioningClass;
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/69df8936-d33a-4e92-97d0-4a7b5ebdbb43)
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/75408fcb-ce1d-42fc-b649-bd2078536505)
+</details>
+
+<details>
+<summary>Chance Creation Shooting Class</summary>
+
+```SQL
+SELECT 
+    chanceCreationShootingClass, 
+    COUNT(*) AS chanceCreationShootingCount, 
+    CAST(ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS decimal(10, 2)) AS chanceCreationShootingPercentage
+FROM soc.analysis_team
+GROUP BY chanceCreationShootingClass;
+```
+
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/05e76efe-ba39-4390-b520-9fbbe9f1d816)
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/0174bd15-76cb-452b-9ef6-f97fc2a6ff0b)
+</details>
+
+<details>
+<summary>Defence Aggression Class</summary>
+
+```SQL
+SELECT 
+    defenceAggressionClass, 
+    COUNT(*) AS defenceAggressionCount, 
+    CAST(ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS decimal(10, 2)) AS defenceAggressionPercentage
+FROM soc.analysis_team
+GROUP BY defenceAggressionClass;
+```
+
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/f009a32c-c8f6-429d-b940-fb7c4f1f531e)
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/a71b9f3b-43e1-4e7d-aebb-06ece7aa945f)
+</details>
+
+<details>
+<summary>Defence Defender Line Class</summary>
+
+```SQL
+SELECT 
+    defenceDefenderLineClass, 
+    COUNT(*) AS defenceDefenderLineCount, 
+    CAST(ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS decimal(10, 2)) AS defenceDefenderLinePercentage
+FROM soc.analysis_team
+GROUP BY defenceDefenderLineClass;
+```
+
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/38af477b-c6d1-4740-a37e-790ce31b11dd)
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/cc675d7b-6386-4c4f-a27a-3ebcbba32fb8)
 </details>
 
 <details>
@@ -693,22 +776,6 @@ GROUP BY defencePressureClass;
 </details>
 
 <details>
-<summary>Defence Aggression Class</summary>
-
-```SQL
-SELECT 
-    defenceAggressionClass, 
-    COUNT(*) AS defenceAggressionCount, 
-    CAST(ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS decimal(10, 2)) AS defenceAggressionPercentage
-FROM soc.analysis_team
-GROUP BY defenceAggressionClass;
-```
-
-![image](https://github.com/AMichaelDS/SQL/assets/132055953/f009a32c-c8f6-429d-b940-fb7c4f1f531e)
-![image](https://github.com/AMichaelDS/SQL/assets/132055953/a71b9f3b-43e1-4e7d-aebb-06ece7aa945f)
-</details>
-
-<details>
 <summary>Defence Team Width Class</summary>
 
 ```SQL
@@ -722,22 +789,6 @@ GROUP BY defenceTeamWidthClass;
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/19baf585-e1fb-4699-8eac-945f9b55e03f)
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/8adef15b-f6e5-4bb9-903c-2a1db65b55b5)
-</details>
-
-<details>
-<summary>Defence Defender Line Class</summary>
-
-```SQL
-SELECT 
-    defenceDefenderLineClass, 
-    COUNT(*) AS defenceDefenderLineCount, 
-    CAST(ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM soc.analysis_team), 2) AS decimal(10, 2)) AS defenceDefenderLinePercentage
-FROM soc.analysis_team
-GROUP BY defenceDefenderLineClass;
-```
-
-![image](https://github.com/AMichaelDS/SQL/assets/132055953/38af477b-c6d1-4740-a37e-790ce31b11dd)
-![image](https://github.com/AMichaelDS/SQL/assets/132055953/cc675d7b-6386-4c4f-a27a-3ebcbba32fb8)
 </details>
 
 ### C. Analysis on Player
@@ -760,7 +811,7 @@ ORDER BY player_name;
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/97435005-d29f-409c-ba2a-c228db5e2692)
 
-#### Highest Overall Team Rating
+#### Highest Overall Player Rating
 I selected ten players with the highest rating
 
 ```SQL
@@ -772,6 +823,7 @@ ORDER BY overall_rating DESC;
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/362621b6-cd54-4934-8b27-732925a8552f)
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/f821eb9c-0639-45d5-bfa2-2884bb0860e8)
 
+Lionel Messi has the highest player rating out of all the other player.
 
 #### Highest For Each Rating
 I use dynamic SQL script to create tables containing player with the highest rating for each attribute. 
@@ -810,7 +862,7 @@ WHERE TABLE_SCHEMA = 'soc'
 
 EXEC sp_executesql @sql;
 ```
-
+Here is all the table that is created using the query above.
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/562b8b72-b51a-4400-899d-54266dcb554d)
 
 #### Categorical Analysis
@@ -1086,6 +1138,8 @@ FROM    (SELECT
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/2578d91d-ee9d-474a-a9c1-18c8d4da4dd5)
 
+We can see that the total player ratings has 50.08 % to correctly predict the outcome of the match. 
+
 #### The second query only shows matches that are not tied. It is done because the probability of having the same team, average player, and total ratings between the home and away teams would be tiny.
 ```SQL
 SELECT TeamOccurrences, PlayerAvgOccurrences, PlayerTotOccurrences, TotalOccurrences,
@@ -1101,6 +1155,8 @@ FROM    (SELECT
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/d3398703-670d-45a8-ae30-9fd035a73561)
 
+We can see that the total player ratings has 65.87 % to correctly predict the outcome of the match. 
+
 #### The third one only shows tied matches, used only to validate the previous result.
 ```SQL
 SELECT TeamOccurrences, PlayerAvgOccurrences, PlayerTotOccurrences, TotalOccurrences,
@@ -1115,6 +1171,8 @@ FROM    (SELECT
 ```
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/994c3219-c37f-40af-9e4f-a39a9050367f)
+
+We can see that player average rating can predict the outcome of tied match with 12.39% accuracy.
 
 ### E. Home & Away Analysis
 Lastly, I analysed the team performance based on the home and away match to determine the winning percentage. 
@@ -1183,20 +1241,17 @@ ORDER BY TotalWinPercentage DESC;
 ```
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/02ddb571-f595-4df0-81bd-a15843985e19)
-
-## 6. Reporting and Visualization
-- Generate comprehensive reports and create interactive dashboards using SQL queries and visualization tools.
-- Present the key findings and insights from the data analysis.
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/fcc97287-4ef7-4d77-8f92-f3989540232f)
 
 
-## 7. Conclusion
+## 6. Conclusion
 - Summarize the project and its accomplishments.
 - Reflect on the insights gained and their implications.
 - Discuss the strengths and limitations of your analysis.
 - Highlight the lessons learned during the process and suggest future enhancements or areas for further exploration.
 
 
-## 8. Appendix
+## 7. Appendix
 
 The appendix includes SQL code snippets, a database schema diagram, and references used in this project.
 
