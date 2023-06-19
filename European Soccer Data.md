@@ -244,7 +244,7 @@ ALTER TABLE soc.PlayerFin
 DROP COLUMN IF EXISTS date;
 ```
 
-![image](https://github.com/AMichaelDS/SQL/assets/132055953/d99e5739-e81d-4cf9-9d67-d9dd50eb3f16)
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/c097f9b6-f444-4baf-8e4f-10975343cf7a)
 
 #### Match(Match & All Tables)
 Here I substituted the ID for each country, league, player, and team with the name to make it easier to look at. 
