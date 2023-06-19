@@ -540,6 +540,7 @@ FROM (
 EXEC sp_executesql @sql;
 ```
 Here is all the table that is created using the query above
+
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/20461c3e-d655-478a-a3b8-c63dd5f9e79e)
 
 <details>
@@ -863,6 +864,7 @@ WHERE TABLE_SCHEMA = 'soc'
 EXEC sp_executesql @sql;
 ```
 Here is all the table that is created using the query above.
+
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/562b8b72-b51a-4400-899d-54266dcb554d)
 
 #### Categorical Analysis
