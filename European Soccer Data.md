@@ -450,7 +450,7 @@ ORDER BY num_team;
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/16bdad11-1ea8-42d6-8ce5-3874b5f907b9)
 
-![image](https://github.com/AMichaelDS/SQL/assets/132055953/fd07b91b-049c-4493-bab8-5f236acf25ca)
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/cc49ec87-3fe4-4139-8675-23da41c61eab)
 
 Here we can see that Spain Liga BBVA has the highest total goal which could imply that it is the most dominant league out of the other league.
 
@@ -504,7 +504,7 @@ ORDER BY overall_rating DESC;
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/edab345c-650d-4e8d-b4cd-1d0d9f35044b)
 
-![image](https://github.com/AMichaelDS/SQL/assets/132055953/2d64b704-449b-4a53-8854-f580817bc07d)
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/8a5e1cf1-8940-478d-a8b6-47152ba0d7cd)
 
 Lazio has the highest overall rating out of all the team.
 
@@ -822,7 +822,8 @@ ORDER BY overall_rating DESC;
 ```
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/362621b6-cd54-4934-8b27-732925a8552f)
-![image](https://github.com/AMichaelDS/SQL/assets/132055953/f821eb9c-0639-45d5-bfa2-2884bb0860e8)
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/6168f3df-1642-4775-ae93-6e3d39a3b412)
+
 
 Lionel Messi has the highest player rating out of all the other player.
 
@@ -1243,7 +1244,7 @@ ORDER BY TotalWinPercentage DESC;
 ```
 
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/02ddb571-f595-4df0-81bd-a15843985e19)
-![image](https://github.com/AMichaelDS/SQL/assets/132055953/fcc97287-4ef7-4d77-8f92-f3989540232f)
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/9757782d-bab5-40ab-8ae2-63a2ef361ccf)
 
 
 ## 6. Conclusion
