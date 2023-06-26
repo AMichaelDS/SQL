@@ -29,7 +29,7 @@
 
 ## 1. Introduction
 This portfolio showcases my skills in using SQL queries to perform complex data manipulation and analysis. This project aims to demonstrate my ability to work with SQL databases, clean and prepare data, perform exploratory data analysis, and generate meaningful insights. 
-This project analyses European soccer data to gain insight into team performance, player statistics and predict match outcomes. The query is performed using the Microsoft SQL Server Management Studio.
+This project analyses European soccer data to gain insight into team performance, player statistics and predict match outcomes. The query is performed using the Microsoft SQL Server Management Studio and the visualisation using Microsoft Power BI.
 
 ## 2. Data Description and Preparation
 ### A. Dataset
