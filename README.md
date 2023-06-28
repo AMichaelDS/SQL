@@ -1,9 +1,8 @@
-Hi, welcome to my SQL portfolio project. 
+# Welcome to my SQL portfolio!
 
-# [European Soccer Data Preparation and Analysis](https://github.com/AMichaelDS/SQL/blob/main/European%20Soccer%20Data.md)
+---
+## Project 
 
-
-This project showcases my proficiency in data manipulation and analysis using SQL queries. It highlights my ability to work with SQL databases, clean and prepare data, perform exploratory data analysis, and generate valuable insights. By analyzing European soccer data, I delve into team performance, player statistics and even predict match outcomes.
-
-![image](https://github.com/AMichaelDS/SQL/assets/132055953/bcc07168-6810-4596-83cb-d526bc60df63)
-
+| Project Link | Project Focus | Project Description |
+|--------------|---------------|---------------------|
+| [European Soccer Data Preparation and Analysis](https://github.com/AMichaelDS/SQL/blob/main/European%20Soccer%20Data.md) | SQL Queries, Data Cleaning, Exploratory Data Analysis, Predictive Modeling | In this project, I performed comprehensive data analysis on European soccer data. Using SQL queries, I cleaned and prepared the data, conducted exploratory analysis, and built predictive models. The objective was to gain insights into team performance, player statistics, and match outcomes. I also visualised the findings using Microsoft Power BI. |
