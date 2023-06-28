@@ -1,5 +1,7 @@
 # European Soccer Data Preparation and Analysis
 
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/bcc07168-6810-4596-83cb-d526bc60df63)
+
 ## Table of Contents
 1. [Introduction](#1-introduction)
 2. [Data Description and Preparation](#2-data-description-and-preparation)
