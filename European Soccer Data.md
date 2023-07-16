@@ -1248,6 +1248,14 @@ ORDER BY TotalWinPercentage DESC;
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/02ddb571-f595-4df0-81bd-a15843985e19)
 ![image](https://github.com/AMichaelDS/SQL/assets/132055953/9757782d-bab5-40ab-8ae2-63a2ef361ccf)
 
+Here I also analysed which team has higher away winning percentage than home win percentage
+```SQL
+SELECT * FROM soc.Analysis_Home_Away
+WHERE TotalAwayWinPercentage > TotalHomeWinPercentage
+ORDER BY TotalWinPercentage
+```
+
+![image](https://github.com/AMichaelDS/SQL/assets/132055953/51661fe8-b74e-4c87-b940-77af49fd0c07)
 
 ## 6. Conclusion
 In conclusion, this project demonstrates my skills and expertise in utilizing SQL queries for data analysis and manipulation. The project aimed to showcase my proficiency in working with SQL databases, data cleaning and preparation, exploratory data analysis, and generating meaningful insights.
